@@ -8,10 +8,10 @@ java -cp ".:./lib/jsoup-1.13.1.jar" Download "$1" > $dest_folder/links
 
 cd $dest_folder
 
-for link in `cat links`
-do
-		  curl -O -s $link
-done;
+last_num=`grep -c "jpg" links`
+url=`awk 'BEGIN{FS="/"; OFS=FS;} { $NF=""; print $0}' links  | head -n1`
+
+curl -O -s $url[01-$last_num].jpg
 
 zip $issue.cbz *.jpg
 mv $issue.cbz ./..
